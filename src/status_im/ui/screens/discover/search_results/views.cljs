@@ -1,15 +1,15 @@
 (ns status-im.ui.screens.discover.search-results.views
   (:require-macros [status-im.utils.views :refer [defview letsubs]])
   (:require [status-im.utils.listview :refer [to-datasource]]
-            [status-im.components.status-bar :as status-bar]
-            [status-im.components.react :as react]
-            [status-im.components.icons.vector-icons :as vi]
-            [status-im.components.toolbar.view :refer [toolbar]]
+            [status-im.ui.components.status-bar :as status-bar]
+            [status-im.ui.components.react :as react]
+            [status-im.ui.components.icons.vector-icons :as vi]
+            [status-im.ui.components.toolbar.view :refer [toolbar]]
             [status-im.ui.screens.discover.components.views :as components]
             [status-im.i18n :as i18n]
             [status-im.ui.screens.discover.styles :as styles]
             [status-im.ui.screens.contacts.styles :as contacts-styles]
-            [status-im.components.toolbar-new.view :as toolbar]))
+            [status-im.ui.components.toolbar-new.view :as toolbar]))
 
 (defn render-separator [_ row-id _]
   (react/list-item [react/view {:style styles/row-separator
@@ -33,7 +33,7 @@
           [vi/icon :icons/group-big {:style contacts-styles/empty-contacts-icon}]
           [react/text {:style contacts-styles/empty-contacts-text}
            (i18n/label :t/no-statuses-found)]]
-         ;TODO (goranjovic) replace this with status-im.components.list.views
+         ;TODO (goranjovic) replace this with status-im.ui.components.list.views
          ;as per https://github.com/status-im/status-react/issues/1840
          [react/list-view {:dataSource      datasource
                            :renderRow       (fn [row _ _]

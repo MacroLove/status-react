@@ -7,7 +7,7 @@
             [taoensso.timbre :as log]
             [status-im.commands.utils :as cu]
             [status-im.native-module.core :as s]
-            [status-im.components.nfc :as nfc]
+            [status-im.ui.components.nfc :as nfc]
             [status-im.constants :as c]
             [cljs.reader :refer [read-string]]
             [status-im.ui.screens.navigation :as nav]
