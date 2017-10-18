@@ -49,7 +49,7 @@
             tabs-hidden? [:tabs-hidden?]]
     (when (seq all-dapps)
       [react/view styles/all-dapps-container
-       [toolbar/toolbar2 {}
+       [toolbar/toolbar {}
         toolbar/default-nav-back
         [toolbar/content-title (i18n/label :t/dapps)]]
        [list/flat-list {:data                    (vals all-dapps)

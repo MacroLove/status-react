@@ -29,7 +29,7 @@
             popular-tags    [:get-popular-tags 10]
             {:keys [discoveries]} [:get-popular-discoveries 10]] ;uses the tags passed via :discover-search-tags state
     [react/view styles/all-recent-container
-     [toolbar/toolbar2 {}
+     [toolbar/toolbar {}
       toolbar/default-nav-back
       [toolbar/content-title (i18n/label :t/popular-tags)]]
      [tags-menu (map :name popular-tags)]

@@ -18,7 +18,7 @@
     [status-im.components.common.common :as common]))
 
 (defn toolbar-view []
-  [toolbar/toolbar2 {:style wallet.styles/toolbar :hide-border? true}
+  [toolbar/toolbar {:style wallet.styles/toolbar :hide-border? true}
    [toolbar/nav-button (actions/back-white actions/default-handler)]
    [toolbar/content-title {:color :white} (i18n/label :t/request-transaction)]])
 

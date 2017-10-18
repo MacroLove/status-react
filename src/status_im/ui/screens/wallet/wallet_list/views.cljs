@@ -12,7 +12,7 @@
             [status-im.utils.utils :as utils]))
 
 (defn- toolbar-view [transactions]
-  [toolbar/toolbar2 {:style styles/toolbar}
+  [toolbar/toolbar {:style styles/toolbar}
    [toolbar/nav-clear-text (i18n/label :t/done) #(re-frame/dispatch [:navigate-back])]
    [toolbar/content-title (i18n/label :t/wallets)]
    [toolbar/actions

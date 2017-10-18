@@ -21,7 +21,7 @@
 (defview dapp-details []
   (letsubs [{:keys [photo-path name dapp-url] :as dapp} [:get :discover-current-dapp]]
     [react/view styles/discover-container
-     [toolbar/toolbar2 {}
+     [toolbar/toolbar {}
       toolbar/default-nav-back
       [toolbar/content-title (i18n/label :t/dapp-profile)]]
      [react/view styles/dapp-details-container

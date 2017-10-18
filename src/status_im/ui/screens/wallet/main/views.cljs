@@ -42,7 +42,7 @@
    :handler   #(rf/dispatch [:navigate-to :transactions-history])})
 
 (defn toolbar-view []
-  [toolbar/toolbar2 {:style wallet.styles/toolbar}
+  [toolbar/toolbar {:style wallet.styles/toolbar}
    [toolbar/nav-button (act/hamburger-white drawer/open-drawer!)]
    [toolbar/content-wrapper
     [toolbar-title]]

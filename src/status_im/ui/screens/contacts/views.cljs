@@ -31,14 +31,14 @@
    (act/opts (if ios? toolbar-options (rest toolbar-options)))])
 
 (defn toolbar-view []
-  [toolbar/toolbar2 {}
+  [toolbar/toolbar {}
    [toolbar/nav-button (act/hamburger drawer/open-drawer!)]
    [toolbar/content-title (label :t/contacts)]
    [toolbar/actions
     (toolbar-actions)]])
 
 (defn toolbar-edit []
-  [toolbar/toolbar2 {}
+  [toolbar/toolbar {}
    [toolbar/nav-button (act/back #(dispatch [:set-in [:contacts/ui-props :edit?] false]))]
    [toolbar/content-title (label :t/edit-contacts)]])
 

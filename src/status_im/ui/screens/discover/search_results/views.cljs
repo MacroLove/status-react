@@ -23,7 +23,7 @@
     (let [datasource (to-datasource discoveries)]
       [react/view styles/discover-tag-container
        [status-bar/status-bar]
-       [toolbar/toolbar2 {}
+       [toolbar/toolbar {}
         toolbar/default-nav-back
         [react/view {:flex-direction  :row
                      :justify-content :flex-start}

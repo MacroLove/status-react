@@ -94,10 +94,11 @@
              [icon-action icon icon-opts handler])
        {:key (str "action-" (or image icon))}))])
 
-(defn toolbar2
-  ([title] (toolbar2 nil title))
-  ([props title] (toolbar2 props default-nav-back [content-title title]))
-  ([props nav-item content-item] (toolbar2 props nav-item content-item [actions [{:image :blank}]]))
+(defn toolbar
+  ([] (toolbar nil))
+  ([title] (toolbar nil title))
+  ([props title] (toolbar props default-nav-back [content-title title]))
+  ([props nav-item content-item] (toolbar props nav-item content-item [actions [{:image :blank}]]))
   ([{:keys [background-color style flat? show-sync-bar?]}
     nav-item
     content-item
@@ -117,60 +118,6 @@
        content-item)
      action-items]
     (when show-sync-bar? [sync-state-gradient-view/sync-state-gradient-view])]))
-
-(defn toolbar
-  "DEPRECATED
-   Do not use, in the process of being replaced by toolbar2"
-  [{:keys [title
-           nav-action
-           hide-nav?
-           actions
-           custom-action
-           background-color
-           custom-content
-           hide-border?
-           modal?
-           border-style
-           title-style
-           style]}]
-  (let [style (merge (tst/toolbar-wrapper background-color false) style)]
-    [rn/view {:style style}
-     [rn/view tst/toolbar-old
-      (when-not hide-nav?
-        [rn/view (tst/toolbar-nav-actions-container actions)
-         [nav-button (or nav-action (if modal? act/default-close act/default-back))]])
-      (or custom-content
-          [rn/view {:style tst/toolbar-container}
-           [rn/text {:style (merge tst/toolbar-title-text title-style)
-                     :font  :toolbar-title}
-            title]])
-
-      [rn/view (tst/toolbar-actions-container (count actions) custom-action)
-       (if actions
-         (for [{:keys [image icon icon-opts options handler]} actions]
-           (with-meta
-             (cond (= image :blank)
-                   [rn/view tst/toolbar-action]
-
-                   options
-                   [context-menu/context-menu
-                    [rn/view tst/toolbar-action
-                     [vi/icon icon icon-opts]]
-                    options
-                    nil
-                    tst/item]
-
-                   :else
-                   [rn/touchable-highlight {:style    tst/item
-                                            :on-press handler}
-                    [rn/view tst/toolbar-action
-                     [vi/icon icon icon-opts]]])
-             {:key (str "action-" (or icon image))}))
-         custom-action)]]
-     [sync-state-gradient-view/sync-state-gradient-view]
-     (when-not hide-border?
-       [rn/view (merge tst/toolbar-border-container border-style)
-        [rn/view tst/toolbar-border]])]))
 
 (def search-text-input (r/atom nil))
 
@@ -201,29 +148,33 @@
                     :font  :toolbar-title}
            title]]))])
 
+(defn- toggle-search-fn [text]
+  (rf/dispatch [:set-in [:toolbar-search :show] text])
+  (rf/dispatch [:set-in [:toolbar-search :text] ""]))
+
+(defn- search-actions [show-search? search-text search-key actions]
+  (if show-search?
+    (if (pos? (count search-text))
+      [(act/close #(do
+                     (.clear @search-text-input)
+                     (rf/dispatch [:set-in [:toolbar-search :text] ""])))]
+      [act/search-icon])
+    (into [(act/search #(toggle-search-fn search-key))] actions)))
+
+
 (defn toolbar-with-search [{:keys [show-search?
                                    search-text
                                    search-key
                                    nav-action
-                                   actions
                                    style
                                    modal?
                                    on-search-submit]
                             :as   opts}]
-  (let [toggle-search-fn #(do
-                            (rf/dispatch [:set-in [:toolbar-search :show] %])
-                            (rf/dispatch [:set-in [:toolbar-search :text] ""]))
-        actions          (if show-search?
-                           (if (pos? (count search-text))
-                             [(act/close #(do
-                                            (.clear @search-text-input)
-                                            (rf/dispatch [:set-in [:toolbar-search :text] ""])))]
-                             [act/search-icon])
-                           (into [(act/search #(toggle-search-fn search-key))] actions))]
-    [toolbar {:modal?         modal?
-              :style          style
-              :nav-action     (if show-search?
-                                (act/back #(toggle-search-fn nil))
-                                nav-action)
-              :custom-content [toolbar-with-search-content opts]
-              :actions        actions}]))
+  [toolbar {:modal? modal?
+             :style style}
+   [nav-button
+    (if show-search?
+     (act/back #(toggle-search-fn nil))
+     (or nav-action (if modal? act/default-close act/default-back)))]
+   [toolbar-with-search-content opts]
+   [actions (search-actions show-search? search-text search-key (:actions opts))]])

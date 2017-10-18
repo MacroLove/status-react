@@ -11,7 +11,7 @@
             tabs-hidden?    [:tabs-hidden?]
             current-account [:get-current-account]]
     [react/view styles/all-recent-container
-     [toolbar/toolbar2 {}
+     [toolbar/toolbar {}
       toolbar/default-nav-back
       [toolbar/content-title (i18n/label :t/recent)]]
      (when (seq discoveries)

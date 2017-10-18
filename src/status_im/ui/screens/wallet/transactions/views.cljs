@@ -39,7 +39,7 @@
    :handler   #(utils/show-popup "TODO" "Not implemented") #_(re-frame/dispatch [:navigate-to-modal :wallet-transactions-sign-all])})
 
 (defn toolbar-view [current-tab unsigned-transactions-count]
-  [toolbar/toolbar2 {:flat? true}
+  [toolbar/toolbar {:flat? true}
    toolbar/default-nav-back
    [toolbar/content-title (i18n/label :t/transactions)]
    (case current-tab
@@ -143,7 +143,7 @@
 (defview filter-history []
   []
   [react/view
-   [toolbar/toolbar2 {}
+   [toolbar/toolbar {}
     [toolbar/nav-clear-text (i18n/label :t/done)]
     [toolbar/content-title (i18n/label :t/transactions-filter-title)]
     [toolbar/text-action {:handler #(utils/show-popup "TODO" "Select All")}
@@ -250,7 +250,7 @@
             confirmations-progress                   [:wallet.transactions.details/confirmations-progress]]
     [react/view {:style styles/flex}
      [status-bar/status-bar]
-     [toolbar/toolbar2 {}
+     [toolbar/toolbar {}
       toolbar/default-nav-back
       [toolbar/content-title (i18n/label :t/transaction-details)]
       (when transaction [toolbar/actions (details-action hash url)])]
