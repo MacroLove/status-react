@@ -56,7 +56,8 @@
 
 (defn save
   [message]
-  (realm/save @realm/account-realm :message message true))
+  (let [message (update message :user-statuses #(if % % []))]
+    (realm/save @realm/account-realm :message message true)))
 
 (defn delete-by-chat-id
   [chat-id]
