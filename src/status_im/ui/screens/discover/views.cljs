@@ -4,8 +4,8 @@
             [clojure.string :as string]
             [status-im.components.react :as react]
             [status-im.components.icons.vector-icons :as vector-icons]
-            [status-im.components.toolbar-new.view :as toolbar]
-            [status-im.components.toolbar-new.actions :as actions]
+            [status-im.components.toolbar.view :as toolbar]
+            [status-im.components.toolbar.actions :as actions]
             [status-im.components.drawer.view :as drawer]
             [status-im.components.carousel.carousel :as carousel]
             [status-im.ui.screens.discover.components.views :as components]
@@ -143,10 +143,10 @@
             all-dapps       [:get-all-dapps]]
     [react/view styles/discover-container
      [toolbar-view (and current-view?
-                        (= show-search :discover)) search-text
-       [react/scroll-view styles/list-container
-        [recent-statuses-preview current-account discoveries]
-        [popular-hashtags-preview {:contacts        contacts
-                                   :current-account current-account}]
-        [all-dapps/preview all-dapps]
-        [public-chats-teaser]]]]))
+                        (= show-search :discover)) search-text]
+     [react/scroll-view styles/list-container
+      [recent-statuses-preview current-account discoveries]
+      [popular-hashtags-preview {:contacts        contacts
+                                 :current-account current-account}]
+      [all-dapps/preview all-dapps]
+      [public-chats-teaser]]]))

@@ -4,12 +4,11 @@
             [status-im.components.status-bar :as status-bar]
             [status-im.components.react :as react]
             [status-im.components.icons.vector-icons :as vi]
-            [status-im.components.toolbar.view :refer [toolbar]]
             [status-im.ui.screens.discover.components.views :as components]
             [status-im.i18n :as i18n]
             [status-im.ui.screens.discover.styles :as styles]
             [status-im.ui.screens.contacts.styles :as contacts-styles]
-            [status-im.components.toolbar-new.view :as toolbar]))
+            [status-im.components.toolbar.view :as toolbar]))
 
 (defn render-separator [_ row-id _]
   (react/list-item [react/view {:style styles/row-separator

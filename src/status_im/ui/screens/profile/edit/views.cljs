@@ -10,7 +10,7 @@
             [status-im.components.status-bar :refer [status-bar]]
             [status-im.components.sticky-button :refer [sticky-button]]
             [status-im.components.text-input-with-label.view :refer [text-input-with-label]]
-            [status-im.components.toolbar-new.view :as toolbar]
+            [status-im.components.toolbar.view :as toolbar]
             [status-im.i18n :refer [label]]
             [status-im.ui.screens.profile.db :as db]
             [status-im.ui.screens.profile.events :as profile.events]

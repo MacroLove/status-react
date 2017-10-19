@@ -18,7 +18,7 @@
             [status-im.utils.datetime :as time]
             [status-im.utils.platform :as platform :refer [platform-specific]]
             [status-im.components.invertible-scroll-view :refer [invertible-scroll-view]]
-            [status-im.components.toolbar-new.view :as toolbar]
+            [status-im.components.toolbar.view :as toolbar]
             [status-im.chat.views.toolbar-content :refer [toolbar-content-view]]
             [status-im.chat.views.message.message :refer [chat-message]]
             [status-im.chat.views.message.datemark :refer [chat-datemark]]

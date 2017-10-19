@@ -8,7 +8,7 @@
             [status-im.ui.screens.discover.components.views :as discover-components]
             [status-im.ui.screens.discover.styles :as styles]
             [status-im.i18n :as i18n]
-            [status-im.components.toolbar-new.view :as toolbar]))
+            [status-im.components.toolbar.view :as toolbar]))
 
 (defn navigate-to-dapp [dapp]
   (do (re-frame/dispatch [:set :discover-current-dapp dapp])

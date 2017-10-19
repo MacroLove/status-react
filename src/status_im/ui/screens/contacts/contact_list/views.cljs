@@ -6,8 +6,8 @@
             [status-im.ui.screens.contacts.views :refer [contact-options]]
             [status-im.components.react :refer [view list-view list-item]]
             [status-im.components.status-bar :refer [status-bar]]
-            [status-im.components.toolbar-new.view :as toolbar]
-            [status-im.components.toolbar-new.actions :as act]
+            [status-im.components.toolbar.view :as toolbar]
+            [status-im.components.toolbar.actions :as act]
             [status-im.components.drawer.view :refer [drawer-view]]
             [status-im.ui.screens.contacts.styles :as st]
             [status-im.utils.listview :as lw]
@@ -23,7 +23,7 @@
                      :extend-options (contact-options row group)}])))
 
 (defview contact-list-toolbar-edit [group]
-  [toolbar/toolbar
+  [toolbar/toolbar {}
    [toolbar/nav-button (act/back #(dispatch [:set-in [:contacts/list-ui-props :edit?] false]))]
    [toolbar/content-title
     (if-not group

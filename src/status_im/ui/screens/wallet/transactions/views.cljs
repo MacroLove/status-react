@@ -7,8 +7,8 @@
             [status-im.components.status-bar :as status-bar]
             [status-im.components.styles :as styles]
             [status-im.components.tabs.views :as tabs]
-            [status-im.components.toolbar-new.actions :as actions]
-            [status-im.components.toolbar-new.view :as toolbar]
+            [status-im.components.toolbar.actions :as actions]
+            [status-im.components.toolbar.view :as toolbar]
             [status-im.i18n :as i18n]
             [status-im.ui.screens.wallet.transactions.styles :as transactions.styles]
             [status-im.ui.screens.wallet.views :as wallet.views]
@@ -44,8 +44,8 @@
    [toolbar/content-title (i18n/label :t/transactions)]
    (case current-tab
      :transactions-history  [toolbar/actions [history-action]]
-     :unsigned-transactions nil ;; TODO (andrey) implement [unsigned-action unsigned-transactions-count]
-     )])
+     :unsigned-transactions nil)]) ;; TODO (andrey) implement [unsigned-action unsigned-transactions-count]
+
 
 (defn action-buttons [{:keys [id to value] :as transaction}]
   [react/view {:style transactions.styles/action-buttons}

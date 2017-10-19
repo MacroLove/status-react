@@ -6,8 +6,8 @@
             [status-im.components.icons.vector-icons :as vector-icons]
             [status-im.components.react :as react]
             [status-im.components.status-bar :as status-bar]
-            [status-im.components.toolbar-new.view :as toolbar]
-            [status-im.components.toolbar-new.actions :as act]
+            [status-im.components.toolbar.view :as toolbar]
+            [status-im.components.toolbar.actions :as act]
             [status-im.i18n :as i18n]
             [status-im.ui.screens.wallet.choose-recipient.styles :as styles]
             [status-im.utils.platform :as platform]
@@ -84,10 +84,10 @@
                                                         {:width  (.-width layout)
                                                          :height (.-height layout)}]))}
       (when (or platform/android?
-                camera-permitted?)[camera/camera {:style         styles/preview
+                camera-permitted?)[camera/camera {:style         styles/preview}]
                       :aspect        :fill
                       :captureAudio  false
                       :torchMode (camera/set-torch camera-flashlight)
-                      :onBarCodeRead #(re-frame/dispatch [:choose-recipient (camera/get-qr-code-data %) nil])}])
+                      :onBarCodeRead #(re-frame/dispatch [:choose-recipient (camera/get-qr-code-data %) nil]))
       [viewfinder camera-dimensions]]
      [recipient-buttons]]))

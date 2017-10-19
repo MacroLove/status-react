@@ -4,7 +4,7 @@
     [status-im.utils.listview :as lw]
     [re-frame.core :as rf]
     [status-im.components.status-bar :as status-bar]
-    [status-im.components.toolbar-new.view :as toolbar]
+    [status-im.components.toolbar.view :as toolbar]
     [status-im.components.action-button.action-button :as action-button]
     [status-im.components.action-button.styles :as action-button-styles]
     [status-im.components.react :as react]
@@ -63,7 +63,8 @@
   (views/letsubs [{:keys [network networks]} [:get-current-account]]
     [react/view {:flex 1}
      [status-bar/status-bar]
-     [toolbar/toolbar (i18n/label :t/network-settings)]
+     [toolbar/simple-toolbar
+      (i18n/label :t/network-settings)]
      [react/view {:flex 1}
       [react/list-view {:dataSource      (lw/to-datasource (vals networks))
                         :renderRow       (render-row network)

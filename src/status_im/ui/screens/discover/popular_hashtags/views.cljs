@@ -6,7 +6,7 @@
             [status-im.components.list.views :as list]
             [re-frame.core :as re-frame]
             [status-im.i18n :as i18n]
-            [status-im.components.toolbar-new.view :as toolbar]))
+            [status-im.components.toolbar.view :as toolbar]))
 
 (defn render-tag [tag]
   [react/touchable-highlight {:on-press #(do (re-frame/dispatch [:set :discover-search-tags [tag]])

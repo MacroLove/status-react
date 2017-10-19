@@ -6,8 +6,8 @@
             [status-im.components.icons.vector-icons :as vi]
             [status-im.components.native-action-button :refer [native-action-button
                                                                native-action-button-item]]
-            [status-im.components.toolbar-new.view :as toolbar]
-            [status-im.components.toolbar-new.actions :as act]
+            [status-im.components.toolbar.view :as toolbar]
+            [status-im.components.toolbar.actions :as act]
             [status-im.components.drawer.view :as drawer]
             [status-im.components.icons.custom-icons :refer [ion-icon]]
             [status-im.components.contact.contact :refer [contact-view]]

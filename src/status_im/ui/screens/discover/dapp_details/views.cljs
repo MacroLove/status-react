@@ -5,7 +5,7 @@
             [status-im.components.chat-icon.screen :as chat-icon.screen]
             [status-im.components.common.common :as common]
             [status-im.components.icons.vector-icons :as vector-icons]
-            [status-im.components.toolbar-new.view :as toolbar]
+            [status-im.components.toolbar.view :as toolbar]
             [status-im.ui.screens.discover.styles :as styles]
             [status-im.i18n :as i18n]
             [re-frame.core :as re-frame]))
