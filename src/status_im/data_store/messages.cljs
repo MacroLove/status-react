@@ -8,13 +8,6 @@
             [status-im.constants :as c])
   (:refer-clojure :exclude [update]))
 
-(defn- user-statuses-to-map
-  [user-statuses]
-  (->> (vals user-statuses)
-       (mapv (fn [{:keys [whisper-identity] :as status}]
-               [whisper-identity status]))
-       (into {})))
-
 (defn- command-type?
   [type]
   (contains?
@@ -31,24 +24,12 @@
 
 (defn get-by-id
   [message-id]
-  (some-> (data-store/get-by-id message-id)
-          (clojure.core/update :user-statuses user-statuses-to-map)))
+  (data-store/get-by-id message-id))
 
 (defn get-message-content-by-id [message-id]
   (when-let [{:keys [content-type content] :as message} (get-by-id message-id)]
     (when (command-type? content-type)
       (read-string content))))
-
-(defn get-messages
-  [messages]
-  (->> messages
-       (mapv #(clojure.core/update % :user-statuses user-statuses-to-map))
-       (into '())
-       reverse
-       (keep (fn [{:keys [content-type] :as message}]
-               (if (command-type? content-type)
-                 (clojure.core/update message :content read-string)
-                 message)))))
 
 (defn get-count-by-chat-id
   [chat-id]
@@ -59,8 +40,6 @@
    (get-by-chat-id chat-id 0))
   ([chat-id from]
    (->> (data-store/get-by-chat-id chat-id from c/default-number-of-messages)
-        (mapv #(clojure.core/update % :user-statuses user-statuses-to-map))
-        (into '())
         reverse
         (keep (fn [{:keys [content-type preview] :as message}]
                 (if (command-type? content-type)

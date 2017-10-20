@@ -6,6 +6,8 @@
             [status-im.utils.fs :as fs]
             [clojure.string :as str]
             [goog.string :as gstr]
+            [cognitect.transit :as transit]
+            [clojure.walk :as walk]
             [status-im.react-native.js-dependencies :as rn-dependencies])
   (:refer-clojure :exclude [exists?]))
 
@@ -121,26 +123,46 @@
 (defn filtered [results filter-query]
   (.filtered results filter-query))
 
-(defn js-object->clj [js-object]
-  (if (= (goog/typeOf js-object) "object")
-    (reduce (fn [acc k]
-              (assoc acc (keyword k) (js-object->clj (aget js-object k))))
-            {}
-            (.keys js/Object js-object))
-    js-object))
+(def map->vec
+  (comp vec vals))
 
-(defn realm-collection->list [collection]
-  (.map collection (fn [object _ _] (js-object->clj object))))
+(def reader (transit/reader :json))
 
-(defn list->array [record list-field]
-  (update-in record [list-field] (comp vec vals)))
+(defn js-object->clj
+  "Converts any js type/object into a map recursively
+  Performs 5 times better than iterating over the object keys
+  and that would require special care for collections"
+  [js-object]
+  (let [o (->> js-object
+               (.stringify js/JSON)
+               (transit/read reader))]
+    (walk/keywordize-keys (if (map? o)
+                            (map->vec o)
+                            o))))
+
+(defn fix-map->vec
+  "Takes a map m and a keyword k
+  Updates the value in k, a map representing a list, into a vector
+  example: {:0 0 :1 1} -> [0 1]"
+  [m k]
+  (update m k map->vec))
+
+(defn fix-map
+  "Takes a map m, a keyword k and an id id
+  Updates the value in k, a map representing a list, into a map using
+  the id extracted from the value as a key
+  example: {:0 {:id 1 :a 2} :1 {:id 2 :a 2}} -> {1 {:id 1 :a 2} 2 {:id 2 :a 2}}"
+  [m k id]
+  (update m k #(reduce (fn [acc [_ v]]
+                         (assoc acc (get v id) v))
+                       {}
+                       %)))
 
 (defn single [result]
-  (-> (aget result 0)))
+  (aget result 0))
 
-(defn single-cljs [result]
-  (when-let [res (aget result 0)]
-    (js-object->clj res)))
+(def single-clj
+  (comp first js-object->clj))
 
 (defn- get-schema-by-name [opts]
   (->> opts
@@ -174,7 +196,7 @@
   (single (get-by-field realm schema-name field value)))
 
 (defn get-one-by-field-clj [realm schema-name field value]
-  (single-cljs (get-by-field realm schema-name field value)))
+  (single-clj (get-by-field realm schema-name field value)))
 
 (defn get-by-fields [realm schema-name op fields]
   (let [queries (map (fn [[k v]]
